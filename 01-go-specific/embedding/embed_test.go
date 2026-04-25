@@ -65,7 +65,6 @@ func TestEmployee(t *testing.T) {
 	if greeting == "" {
 		t.Error("expected non-empty greeting")
 	}
-
 	// 验证 Employee 特有方法
 	work := emp.Work()
 	expected := "Charlie is working in Engineering department"
@@ -261,7 +260,7 @@ func (m *mockReadWriter) Close() error {
 func TestEmbeddingVsComposition(t *testing.T) {
 	// 嵌入：可以直接访问字段和方法
 	emp := CreateEmployee("Frank", 40, "EMP003", "IT", 10000)
-	
+
 	// 可以直接访问 Name（通过方法提升）
 	if emp.Name != "Frank" {
 		t.Errorf("expected Name 'Frank', got '%s'", emp.Name)
@@ -277,7 +276,7 @@ func TestEmbeddingVsComposition(t *testing.T) {
 // ExampleEmployee 演示 Employee 的使用
 func ExampleEmployee() {
 	emp := CreateEmployee("Alice", 30, "EMP001", "Engineering", 8000)
-	
+
 	fmt.Println("Name:", emp.Name)
 	fmt.Println("Greeting:", emp.Greet())
 	fmt.Println("Work:", emp.Work())
