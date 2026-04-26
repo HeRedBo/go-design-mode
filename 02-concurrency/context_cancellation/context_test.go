@@ -21,7 +21,6 @@ func TestTimeoutControl(t *testing.T) {
 	start := time.Now()
 	err := TimeoutControl()
 	elapsed := time.Since(start)
-
 	// 应该在 2 秒左右超时
 	if elapsed < 1500*time.Millisecond || elapsed > 2500*time.Millisecond {
 		t.Errorf("expected timeout around 2s, got %v", elapsed)
@@ -381,13 +380,20 @@ func ExampleManualCancel() {
 	// Goroutine cancelled
 }
 
-// ExampleContextValue 演示 Context 传值
-func ExampleContextValue() {
+// TestContextValueMultiple 演示多个 Context 传值
+func TestContextValueMultiple(t *testing.T) {
 	ctx := context.Background()
 	ctx = WithRequestID(ctx, "req-001")
 	ctx = WithUserID(ctx, "user-123")
 
-	fmt.Printf("RequestID: %s, UserID: %s\n", GetRequestID(ctx), GetUserID(ctx))
-	// Output:
-	// RequestID: req-001, UserID: user-123
+	requestID := GetRequestID(ctx)
+	userID := GetUserID(ctx)
+
+	if requestID != "req-001" {
+		t.Errorf("Expected RequestID 'req-001', got '%s'", requestID)
+	}
+
+	if userID != "user-123" {
+		t.Errorf("Expected UserID 'user-123', got '%s'", userID)
+	}
 }
